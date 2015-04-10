@@ -14,8 +14,8 @@ public class NewServlet extends HttpServlet{
 		resp.setContentType("text/html");
 		
 		//Calculation 1:
-		int radius = 50;
-		double result1Area = radius*(Math.PI);
+		double radius = 50;
+		double result1Area = Math.pow(radius, 2)*(Math.PI);
 		
 		//Calculation 2:
 		int angleB = 30;
