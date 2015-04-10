@@ -18,11 +18,12 @@ public class NewServlet extends HttpServlet{
 		double result1Area = Math.pow(radius, 2)*(Math.PI);
 		
 		//Calculation 2:
-		int angleB = 30;
+		double angleB = 30;
 		int hypotenuseLength = 50;
 		double angleBinRadians = Math.toRadians(angleB);
 		double angleBinsin = Math.sin(angleBinRadians);
 		double reasult2Oppsite = angleBinsin * hypotenuseLength;
+		
 		
 		//Calculation 3:
 		double base = 20;
