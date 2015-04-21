@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <application>natalipu1991</application>
-  <version>3</version>
+  <version>4</version>
 
   <!--
     Allows App Engine to send multiple requests to one instance in parallel:
@@ -19,7 +19,7 @@
       <sessions-enabled>true</sessions-enabled>
 
     It's possible to reduce request latency by configuring your application to
-    asynchronously write HTTP session data to the datastore:
+    asynchronously write HTTP session data to the datestore:
 
       <async-session-persistence enabled="true" />
 
