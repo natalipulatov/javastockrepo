@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Calendar;
 
+import javacourse.myorg.com.model.Stock;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
