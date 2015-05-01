@@ -4,10 +4,10 @@ public class Portfolio {
 	
 	private final static int MAX_PORTFOLIO_SIZE = 5;
 	
-	private String title;//enter by default a title or the user will enter?
+	private String title;
 	private Stock[] stocks;
 	private int portfolioSize;
-	
+	//constructor	
 	public Portfolio() {
 		this.stocks = new Stock[MAX_PORTFOLIO_SIZE];
 		this.portfolioSize = 0;
