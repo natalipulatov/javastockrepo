@@ -5,30 +5,6 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
-		<servlet-name>Homework</servlet-name>
-		<servlet-class>javacourse.myorg.com.HomeworkServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Homework</servlet-name>
-		<url-pattern>/homework</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>NewServlet</servlet-name>
-		<servlet-class>javacourse.myorg.com.NewServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>NewServlet</servlet-name>
-		<url-pattern>/NewServlet</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>StockDetailsSevlet</servlet-name>
-		<servlet-class>javacourse.myorg.com.StockDetailsSevlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>StockDetailsSevlet</servlet-name>
-		<url-pattern>/stockDetails</url-pattern>
-	</servlet-mapping>
-	<servlet>
 		<servlet-name>PortfolioServlet</servlet-name>
 		<servlet-class>javacourse.myorg.com.servlet.PortfolioServlet</servlet-class>
 	</servlet>
