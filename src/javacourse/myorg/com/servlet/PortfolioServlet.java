@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-/**This class allows to show portFolios in the browser
+/**This class allows to show portFolio in the browser
  *  * @author Natali
  * @since 08/05/2015
  * date 08/05/2015 */
@@ -21,18 +21,6 @@ public class PortfolioServlet extends HttpServlet{
 				PortfolioManager portfolioManger = new PortfolioManager();
 				
 				Portfolio portfolio = portfolioManger.getPortfolio();
-				Portfolio portfolio2 = new Portfolio(portfolio);
-				
-				portfolio2.setTitle("portfolio #2");
 				resp.getWriter().println(portfolio.getHtmlString());
-				resp.getWriter().println(portfolio2.getHtmlString());
-				
-				portfolio.removeStock("PIH");
-				resp.getWriter().println(portfolio.getHtmlString());
-				resp.getWriter().println(portfolio2.getHtmlString());
-				
-				portfolio2.changeStockBid("CAAS", 55.55f);
-				resp.getWriter().println(portfolio.getHtmlString());
-				resp.getWriter().println(portfolio2.getHtmlString());
 	}
 }

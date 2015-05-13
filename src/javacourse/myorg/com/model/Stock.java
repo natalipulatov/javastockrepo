@@ -2,24 +2,17 @@ package javacourse.myorg.com.model;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
+
+import javacourse.myorg.com.model.Portfolio.ALGO_RECOMMENDATION;
 /** An instance if this class represents a stock
- * @author Natali
- * @since 08/05/2015
- * date 08/05/2015  */
+ * @author Natali  */
 public class Stock {
-	
-	private final static int BUY = 0;
-	private final static int SELL = 1;
-	private final static int REMOVE = 2;
-	private final static int HOLD = 3;
-	
 String symbol;
 private float ask; 
 private float bid;
 private Date date;
-private int recommendation;
+private ALGO_RECOMMENDATION recommendation;
 private int stockQuantity;
-
 /**This constructor creates a stock object  
  * @param gets symbol of stock, ask, bid and date */
 public Stock(String symbol, float ask, float bid, Date date) {
@@ -28,6 +21,7 @@ public Stock(String symbol, float ask, float bid, Date date) {
 	this.ask = ask;
 	this.bid = bid;
 	this.date = date;
+	this.stockQuantity = 0;
 }
 /**The copy constructor copies given stock object by value 
  * @param gets stock object */
@@ -59,11 +53,24 @@ public Date getDate() {
 public void setDate(Date date) {
 	this.date = date;
 }
+public ALGO_RECOMMENDATION getRecommendation() {
+	return recommendation;
+}
+public void setRecommendation(ALGO_RECOMMENDATION recommendation) {
+	this.recommendation = recommendation;
+}
+public int getStockQuantity() {
+	return stockQuantity;
+}
+public void setStockQuantity(int stockQuantity) {
+	this.stockQuantity = stockQuantity;
+}
+
 /**The method prints a stock  
  * @return stock's details(symbol, ask, bid and date) */
 public String getHtmlDescription(){
 	SimpleDateFormat df = new SimpleDateFormat("MM/dd/YYYY");//Format date
-	String stocksDetails = "<b>Stock symbol</b>: " +getSymbol()+","+"<b> ask</b>: "+getAsk()+","+"<b> bid</b>: "+getBid()+","+"<b> date</b>: "+df.format(getDate()); 
+	String stocksDetails = "<b>Stock symbol</b>: " +getSymbol()+","+"<b> ask</b>: "+getAsk()+","+"<b> bid</b>: "+getBid()+","+"<b> date</b>: "+df.format(getDate())+", "+"<b> quantity</b>: "+ getStockQuantity(); 
 	return stocksDetails;
 }
 }
