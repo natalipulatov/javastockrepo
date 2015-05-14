@@ -175,7 +175,7 @@ public class Portfolio {
 						float tempBalnce = quantityOfStock*stock.getAsk();
 						if(tempBalnce <= this.balance){
 							updateBalance(-tempBalnce);
-							stock.setStockQuantity(quantityOfStock);
+							stock.setStockQuantity(this.stocks[index].getStockQuantity() + quantityOfStock);
 							return true;
 						}
 						else{
@@ -186,9 +186,9 @@ public class Portfolio {
 				}
 				else{
 				float tempCountOfSell = quantity * stock.getAsk(); 
-					if(tempCountOfSell >= 0){
+					if(tempCountOfSell <= this.balance){
 						updateBalance(-tempCountOfSell);
-						stock.setStockQuantity(quantity);
+						stock.setStockQuantity(this.stocks[index].getStockQuantity() + quantity);
 						return true;
 					}
 					else{
@@ -204,7 +204,7 @@ public class Portfolio {
 						float tempBalnce = quantityOfStock * stock.getAsk();
 						if(tempBalnce <= this.balance){
 							updateBalance(-tempBalnce);
-							stock.setStockQuantity(quantityOfStock);
+							stock.setStockQuantity(this.stocks[index].getStockQuantity() + quantityOfStock);
 							return true;
 						}
 						else{
@@ -215,9 +215,9 @@ public class Portfolio {
 				}
 				else{
 				float tempCountOfSell = quantity * stock.getAsk(); 
-					if(tempCountOfSell >= 0){
+					if(tempCountOfSell <= this.balance){
 						updateBalance(-tempCountOfSell);
-						stock.setStockQuantity(quantity);
+						stock.setStockQuantity(this.stocks[index].getStockQuantity() + quantity);
 						return true;
 					}
 					else{
