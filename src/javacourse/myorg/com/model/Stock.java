@@ -3,10 +3,12 @@ package javacourse.myorg.com.model;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import org.algo.model.StockInterface;
+
 import javacourse.myorg.com.model.Portfolio.ALGO_RECOMMENDATION;
 /** An instance if this class represents a stock
  * @author Natali  */
-public class Stock {
+public class Stock implements StockInterface{
 String symbol;
 private float ask; 
 private float bid;
@@ -15,7 +17,7 @@ private ALGO_RECOMMENDATION recommendation;
 private int stockQuantity;
 /**This constructor creates a stock object  
  * @param gets symbol of stock, ask, bid and date */
-public Stock(String symbol, float ask, float bid, Date date) {
+public Stock (String symbol, float ask, float bid, Date date) {
 	super();
 	this.symbol = symbol;
 	this.ask = ask;

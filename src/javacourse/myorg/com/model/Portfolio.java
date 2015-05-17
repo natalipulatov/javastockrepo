@@ -1,7 +1,10 @@
 package javacourse.myorg.com.model;
+
+import org.algo.model.PortfolioInterface;
+
 /** An instance if this class represents a portFolio of stocks
  * @author Natali  */
-public class Portfolio {
+public class Portfolio implements PortfolioInterface {
 	
 	private final static int MAX_PORTFOLIO_SIZE = 5;
 	public enum ALGO_RECOMMENDATION{
