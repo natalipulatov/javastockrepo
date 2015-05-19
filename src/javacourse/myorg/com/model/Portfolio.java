@@ -1,6 +1,6 @@
 package javacourse.myorg.com.model;
-
 import org.algo.model.PortfolioInterface;
+import org.algo.model.StockInterface;
 
 /** An instance if this class represents a portFolio of stocks
  * @author Natali  */
@@ -9,10 +9,26 @@ public class Portfolio implements PortfolioInterface {
 	private final static int MAX_PORTFOLIO_SIZE = 5;
 	public enum ALGO_RECOMMENDATION{
 		 BUY, SELL, REMOVE, HOLD;
+		public static ALGO_RECOMMENDATION valueOf(ALGO_RECOMMENDATION recommendation) {
+			// TODO Auto-generated method stub
+			if(recommendation.equals(BUY))
+			{
+			
+			}
+			else if(recommendation.equals(SELL))
+			{
+				
+			}
+			else if(recommendation.equals(REMOVE))
+			{
+				
+			}
+			return HOLD;
+		}
 	}
 	
 	private String title;
-	private Stock[] stocks;
+	private StockInterface[] stocks;
 	private int portfolioSize;
 	private float balance;
 	
@@ -41,6 +57,13 @@ public class Portfolio implements PortfolioInterface {
 			this.stocks[i] = new Stock(copyied[i]);
 		}
 	}
+	public Portfolio(Stock[] stockArray) {
+		// TODO Auto-generated constructor stub
+		Stock[] copyied = stockArray;
+		for(int i = 0; i< this.portfolioSize; i++){
+			this.stocks[i] = new Stock(copyied[i]);
+		}
+	}
 	public float getBalance() {
 		return balance;
 	}
@@ -57,7 +80,7 @@ public class Portfolio implements PortfolioInterface {
 		this.title = title;
 	}
 	public Stock[] getStocks() {
-		return stocks;
+		return (Stock[]) stocks;
 	}
 	public void setStocks(Stock[] stocks) {
 		this.stocks = stocks;
@@ -75,7 +98,7 @@ public class Portfolio implements PortfolioInterface {
 		int index = findIndexBySymbol(stock.symbol);
 			if (index == this.portfolioSize){//if not exists
 				this.stocks[this.portfolioSize] = stock;
-				this.stocks[this.portfolioSize].setStockQuantity(0);
+				((Stock) this.stocks[this.portfolioSize]).setStockQuantity(0);
 				this.portfolioSize++;
 			}
 			else{
@@ -90,7 +113,7 @@ public class Portfolio implements PortfolioInterface {
 		
 		for(int i = 0;  i < portfolioSize; i++)
 		{
-			portfolioString = portfolioString + this.stocks[i].getHtmlDescription() + "<br>";
+			portfolioString = portfolioString + ((Stock) this.stocks[i]).getHtmlDescription() + "<br>";
 		}
 		return portfolioString;
 	}
@@ -132,22 +155,22 @@ public class Portfolio implements PortfolioInterface {
 				System.out.print("The stock doesn't exist in the portfolio");
 				return false;
 			}
-			else if(this.stocks[index].getStockQuantity() == 0){
+			else if(((Stock) this.stocks[index]).getStockQuantity() == 0){
 				System.out.print("Not having stocks to sell");
 				return false;
 			}
-			else if(quantity > this.stocks[index].getStockQuantity()){
+			else if(quantity > ((Stock) this.stocks[index]).getStockQuantity()){
 				System.out.print("Not enough stocks to sell");
 			}
 			else if (quantity == -1){
-				this.balance =this.balance + (this.stocks[index].getStockQuantity()* this.stocks[index].getBid());
-				this.stocks[index].setStockQuantity(0);
+				this.balance =this.balance + (((Stock) this.stocks[index]).getStockQuantity()* this.stocks[index].getBid());
+				((Stock) this.stocks[index]).setStockQuantity(0);
 				return true;
 			}
 			else{
-				int stockQuantity = this.stocks[index].getStockQuantity();
+				int stockQuantity = ((Stock) this.stocks[index]).getStockQuantity();
 				this.balance =this.balance + (stockQuantity* this.stocks[index].getBid());
-				this.stocks[index].setStockQuantity(stockQuantity - quantity);
+				((Stock) this.stocks[index]).setStockQuantity(stockQuantity - quantity);
 				return true;
 			}
 		}
@@ -178,7 +201,7 @@ public class Portfolio implements PortfolioInterface {
 						float tempBalnce = quantityOfStock*stock.getAsk();
 						if(tempBalnce <= this.balance){
 							updateBalance(-tempBalnce);
-							stock.setStockQuantity(this.stocks[index].getStockQuantity() + quantityOfStock);
+							stock.setStockQuantity(((Stock) this.stocks[index]).getStockQuantity() + quantityOfStock);
 							return true;
 						}
 						else{
@@ -191,7 +214,7 @@ public class Portfolio implements PortfolioInterface {
 				float tempCountOfSell = quantity * stock.getAsk(); 
 					if(tempCountOfSell <= this.balance){
 						updateBalance(-tempCountOfSell);
-						stock.setStockQuantity(this.stocks[index].getStockQuantity() + quantity);
+						stock.setStockQuantity(((Stock) this.stocks[index]).getStockQuantity() + quantity);
 						return true;
 					}
 					else{
@@ -207,7 +230,7 @@ public class Portfolio implements PortfolioInterface {
 						float tempBalnce = quantityOfStock * stock.getAsk();
 						if(tempBalnce <= this.balance){
 							updateBalance(-tempBalnce);
-							stock.setStockQuantity(this.stocks[index].getStockQuantity() + quantityOfStock);
+							stock.setStockQuantity(((Stock) this.stocks[index]).getStockQuantity() + quantityOfStock);
 							return true;
 						}
 						else{
@@ -220,7 +243,7 @@ public class Portfolio implements PortfolioInterface {
 				float tempCountOfSell = quantity * stock.getAsk(); 
 					if(tempCountOfSell <= this.balance){
 						updateBalance(-tempCountOfSell);
-						stock.setStockQuantity(this.stocks[index].getStockQuantity() + quantity);
+						stock.setStockQuantity(((Stock) this.stocks[index]).getStockQuantity() + quantity);
 						return true;
 					}
 					else{
@@ -237,7 +260,7 @@ public class Portfolio implements PortfolioInterface {
 	public float getStockValue(){
 		float totalValueOfStocksNotLiquid = 0;
 		for(int i = 0; i < this.portfolioSize; i++){
-			totalValueOfStocksNotLiquid = totalValueOfStocksNotLiquid + (this.stocks[i].getStockQuantity() * this.stocks[i].getBid());
+			totalValueOfStocksNotLiquid = totalValueOfStocksNotLiquid + (((Stock) this.stocks[i]).getStockQuantity() * this.stocks[i].getBid());
 		}
 		return totalValueOfStocksNotLiquid;
 	}
@@ -259,7 +282,7 @@ public class Portfolio implements PortfolioInterface {
 				System.out.print("Not correct symbol of stock was received");
 			}
 			else{
-				this.stocks[index].setBid(newBid);
+				((Stock) this.stocks[index]).setBid(newBid);
 			}
 		}
 	}
@@ -277,13 +300,31 @@ public class Portfolio implements PortfolioInterface {
 		}
 		else{
 			for(index = 0; index< this.portfolioSize; index++){
-				if(this.stocks[index].symbol.equals(stockSymbol)){
+				if(this.stocks[index].getSymbol().equals(stockSymbol)){
 				break;
 				}
 			}
 		}
 		return index;	
 	}
+	public Stock findStock(String stockSymbol){
+		int index = 0;
+		if(stockSymbol.equals(null)){
+			System.out.print("Not correct symbol of stock was received");
+		}
+		else if(this.portfolioSize == 0){
+			return (Stock) stocks[index];
+		}
+		else{
+			for(index = 0; index< this.portfolioSize; index++){
+				if(this.stocks[index].getSymbol().equals(stockSymbol)){
+				break;
+				}
+			}
+		}
+		return (Stock) stocks[index];	
+	}
+
 	/**The method updates porFilios' balance.
 	 * @param gets amount of money */
 	public void updateBalance(float amount){
@@ -295,4 +336,10 @@ public class Portfolio implements PortfolioInterface {
 			System.out.print("You can not withdraw this amount because the acount balance can not be negative");
 		}
 	}
+	public static int getMaxSize() {
+		// TODO Auto-generated method stub
+		return MAX_PORTFOLIO_SIZE;
+	}
+	
+	
 }

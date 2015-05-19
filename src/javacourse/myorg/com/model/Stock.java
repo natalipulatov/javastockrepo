@@ -30,6 +30,14 @@ public Stock (String symbol, float ask, float bid, Date date) {
 public Stock(Stock stock){
 	this(new String (stock.getSymbol()), stock.getAsk(), stock.getBid(), new Date(stock.getDate(). getTime() ));	
 } 
+public Stock() {
+	// TODO Auto-generated constructor stub
+	this.symbol = null;
+	this.ask = 0;
+	this.bid = 0;
+	this.date = null;
+	this.stockQuantity = 0;
+}
 //Adding to all members getters and setters
 public String getSymbol() {
 	return symbol;
@@ -52,8 +60,9 @@ public void setBid(float bid) {
 public Date getDate() {
 	return date;
 }
-public void setDate(Date date) {
-	this.date = date;
+public void setDate(Date time) {
+	// TODO Auto-generated method stub
+	this.date = time;
 }
 public ALGO_RECOMMENDATION getRecommendation() {
 	return recommendation;
@@ -75,4 +84,5 @@ public String getHtmlDescription(){
 	String stocksDetails = "<b>Stock symbol</b>: " +getSymbol()+","+"<b> ask</b>: "+getAsk()+","+"<b> bid</b>: "+getBid()+","+"<b> date</b>: "+df.format(getDate())+", "+"<b> quantity</b>: "+ getStockQuantity(); 
 	return stocksDetails;
 }
+
 }

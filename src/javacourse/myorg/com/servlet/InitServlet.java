@@ -1,4 +1,4 @@
-package javacourse.myorg.com.init;
+package javacourse.myorg.com.servlet;
 
 import javacourse.myorg.com.service.PortfolioManager;
 
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 
 import org.algo.service.ServiceManager;
 
-public class InitServelt extends HttpServlet{
+public class InitServlet extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
