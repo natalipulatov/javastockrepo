@@ -8,24 +8,7 @@ public class Portfolio implements PortfolioInterface {
 	
 	private final static int MAX_PORTFOLIO_SIZE = 5;
 	public enum ALGO_RECOMMENDATION{
-		 BUY, SELL, REMOVE, HOLD;
-		public static ALGO_RECOMMENDATION valueOf(ALGO_RECOMMENDATION recommendation) {
-			// TODO Auto-generated method stub
-			if(recommendation.equals(BUY))
-			{
-			
-			}
-			else if(recommendation.equals(SELL))
-			{
-				
-			}
-			else if(recommendation.equals(REMOVE))
-			{
-				
-			}
-			return HOLD;
-		}
-	}
+		 BUY, SELL, REMOVE, HOLD;}
 	
 	private String title;
 	private StockInterface[] stocks;
@@ -60,8 +43,9 @@ public class Portfolio implements PortfolioInterface {
 	public Portfolio(Stock[] stockArray) {
 		// TODO Auto-generated constructor stub
 		Stock[] copyied = stockArray;
-		for(int i = 0; i< this.portfolioSize; i++){
+		for(int i = 0; i< stockArray.length; i++){
 			this.stocks[i] = new Stock(copyied[i]);
+			this.portfolioSize++;
 		}
 	}
 	public float getBalance() {
@@ -311,12 +295,13 @@ public class Portfolio implements PortfolioInterface {
 		int index = 0;
 		if(stockSymbol.equals(null)){
 			System.out.print("Not correct symbol of stock was received");
+			return null;
 		}
 		else if(this.portfolioSize == 0){
-			return (Stock) stocks[index];
+			return null;
 		}
 		else{
-			for(index = 0; index< this.portfolioSize; index++){
+			for(index = 0; index < this.portfolioSize; index++){
 				if(this.stocks[index].getSymbol().equals(stockSymbol)){
 				break;
 				}

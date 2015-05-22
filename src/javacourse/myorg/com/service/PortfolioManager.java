@@ -2,11 +2,10 @@ package javacourse.myorg.com.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.List;
 import org.algo.dto.PortfolioDto;
 import org.algo.dto.PortfolioTotalStatus;
 import org.algo.dto.StockDto;
@@ -19,7 +18,7 @@ import org.algo.service.PortfolioManagerInterface;
 import org.algo.service.ServiceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 //import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-import java.util.List;
+
 import javacourse.myorg.com.model.Portfolio.ALGO_RECOMMENDATION;
 import javacourse.myorg.com.model.Portfolio;
 import javacourse.myorg.com.model.Stock;
@@ -29,9 +28,16 @@ import javacourse.myorg.com.model.Stock;
 public class PortfolioManager implements PortfolioManagerInterface {
 	
 	private DatastoreService datastoreService = (DatastoreService) ServiceManager.datastoreService();
+	/**The method creates new portFolio.
+	 * @return new portFolio of stocks */
+	@Override
+
+	public PortfolioInterface getPortfolio() {
+		PortfolioDto portfolioDto = ((org.algo.service.DatastoreService) datastoreService).getPortfolilo();
+		return fromDto(portfolioDto);
+	}
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		StockInterface[] stocks = getPortfolio().getStocks();
 		List<String> symbols = new ArrayList<>(Portfolio.getMaxSize());
 		for (StockInterface si : stocks) {
@@ -57,57 +63,11 @@ public class PortfolioManager implements PortfolioManagerInterface {
 			System.out.println(e.getMessage());
 		}
 	}
-	/**The method creates new portFolio.
-	 * @return new portFolio of stocks */
+	/**
+	 * get portfolio totals
+	 */
 	@Override
-	public PortfolioInterface getPortfolio() {
-		// TODO Auto-generated method stub
-		Portfolio myPortfolio = new Portfolio();
-		//Exercise.2
-		myPortfolio.setTitle("Exercise 7 portfolio");
-		//Exercise.3
-		myPortfolio.updateBalance(10000);
-		
-		//Creating new Date instances to solve the problem of reference to the same Date object
-		Calendar cal = Calendar.getInstance();
-		cal.set(2014,11,15);
-		Date d1 = cal.getTime();
-		Date d2 = cal.getTime();
-		Date d3 = cal.getTime();
-		
-		//Initializing instance of class Stock
-		//Exercise.4
-		Stock stockPih = new Stock("PIH",(float)10.0, (float)8.5, d1);
-		myPortfolio.buyStock(stockPih, 20);
-		
-		Stock stockAal = new Stock("AAL",(float)30.0, (float)25.5, d2);
-		myPortfolio.buyStock(stockAal, 30);
-		
-		Stock stockCaas = new Stock("CAAS",(float)20.0, (float)15.5, d3);
-		myPortfolio.buyStock(stockCaas, 40);
-		
-		//Exercise.5
-		myPortfolio.sellStock("AAL", -1);
-		//Exercise.6
-		myPortfolio.removeStock("CAAS");
-		return myPortfolio;
-	}
-
-	@Override
-	public void setTitle(String title) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateBalance(float value) throws PortfolioException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public PortfolioTotalStatus[] getPortfolioTotalStatus() {
-		// TODO Auto-generated method stub
+	public PortfolioTotalStatus[] getPortfolioTotalStatus () {
 
 		Portfolio portfolio = (Portfolio) getPortfolio();
 		Map<Date, Float> map = new HashMap<>();
@@ -155,10 +115,11 @@ public class PortfolioManager implements PortfolioManagerInterface {
 
 		return ret;
 	}
-
+	/**
+	 * Add stock to portfolio 
+	 */
 	@Override
-	public void addStock(String symbol) throws PortfolioException {
-		// TODO Auto-generated method stub
+	public void addStock(String symbol) {
 		Portfolio portfolio = (Portfolio) getPortfolio();
 
 		try {
@@ -167,7 +128,7 @@ public class PortfolioManager implements PortfolioManagerInterface {
 			//get current symbol values from nasdaq.
 			Stock stock = fromDto(stockDto);
 			
-			//first thing, add it to portFolio.
+			//first thing, add it to portfolio.
 			portfolio.addStock(stock);   
 			//or:
 			//portfolio.addStock(stock);   
@@ -179,12 +140,31 @@ public class PortfolioManager implements PortfolioManagerInterface {
 		} catch (SymbolNotFoundInNasdaq e) {
 			System.out.println("Stock Not Exists: "+symbol);
 		}
-		
 	}
 
+	/**
+	 * Set portfolio title
+	 */
 	@Override
-	public void buyStock(String symbol, int quantity) throws PortfolioException {
-		// TODO Auto-generated method stub
+	public void setTitle(String title) {
+		Portfolio portfolio = (Portfolio) getPortfolio();
+		portfolio.setTitle(title);
+		flush(portfolio);
+	}
+	/**
+	 * update portfolio balance
+	 */
+	public void updateBalance(float value) { 
+		Portfolio portfolio = (Portfolio) getPortfolio();
+		portfolio.updateBalance(value);
+		flush(portfolio);
+	}
+	
+	/**
+	 * Buy stock
+	 */
+	@Override
+	public void buyStock(String symbol, int quantity) throws PortfolioException{
 		try {
 			Portfolio portfolio = (Portfolio) getPortfolio();
 			
@@ -200,30 +180,27 @@ public class PortfolioManager implements PortfolioManagerInterface {
 		}
 	}
 
+	/**
+	 * Sell stock
+	 */
 	@Override
-	public void sellStock(String symbol, int quantity)
-			throws PortfolioException {
-		// TODO Auto-generated method stub
-		try {
-			Portfolio portfolio = (Portfolio) getPortfolio();
-			
-			Stock stock = (Stock) portfolio.findStock(symbol);
-			if(stock == null) {
-				stock = fromDto(ServiceManager.marketService().getStock(symbol));				
-			}
-			
-			portfolio.sellStock(symbol, quantity);
-			flush(portfolio);
-		}catch (Exception e) {
-			System.out.println("Exception: "+e);
-		}	
+	public void sellStock(String symbol, int quantity) throws PortfolioException {
+		Portfolio portfolio = (Portfolio) getPortfolio();
+		portfolio.sellStock(symbol, quantity);
+		flush(portfolio);
+	}
+	
+
+	/**
+	 * Remove stock
+	 */
+	@Override
+	public void removeStock(String symbol) { 
+		Portfolio portfolio = (Portfolio) getPortfolio();
+		portfolio.removeStock(symbol);
+		flush(portfolio);
 	}
 
-	@Override
-	public void removeStock(String symbol) throws PortfolioException {
-		// TODO Auto-generated method stub
-		
-	}
 	/**
 	 * update database with new portfolio's data
 	 * @param portfolio
@@ -245,9 +222,7 @@ public class PortfolioManager implements PortfolioManagerInterface {
 		newStock.setBid(stockDto.getBid());
 		newStock.setDate(stockDto.getDate());
 		newStock.setStockQuantity(stockDto.getQuantity());
-		if(stockDto.getRecommendation() != null){
-			newStock.setRecommendation(ALGO_RECOMMENDATION.valueOf(stockDto.getRecommendation()));
-		}
+		if(stockDto.getRecommendation() != null) newStock.setRecommendation(ALGO_RECOMMENDATION.valueOf(stockDto.getRecommendation()));
 
 		return newStock;
 	}
@@ -313,6 +288,7 @@ public class PortfolioManager implements PortfolioManagerInterface {
 		return ret;
 	}	
 
+
 	/**
 	 * toDtoList - convert List of Stocks to list of Stock DTO
 	 * @param stocks
@@ -327,5 +303,14 @@ public class PortfolioManager implements PortfolioManagerInterface {
 		}
 
 		return ret;
+	}
+	/**
+	 * A method that returns a new instance of Portfolio copied from another instance.
+	 * @param portfolio		Portfolio to copy.
+	 * @return a new Portfolio object with the same values as the one given.
+	 */
+	public Portfolio duplicatePortfolio(Portfolio portfolio) {
+		Portfolio copyPortfolio = new Portfolio(portfolio);
+		return copyPortfolio;
 	}
 }
