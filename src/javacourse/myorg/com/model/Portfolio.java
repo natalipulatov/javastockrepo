@@ -8,7 +8,10 @@ public class Portfolio implements PortfolioInterface {
 	
 	private final static int MAX_PORTFOLIO_SIZE = 5;
 	public enum ALGO_RECOMMENDATION{
-		 BUY, SELL, REMOVE, HOLD;}
+		BUY,SELL ,REMOVE ,HOLD; 
+	}
+	
+	
 	
 	private String title;
 	private StockInterface[] stocks;
@@ -42,9 +45,12 @@ public class Portfolio implements PortfolioInterface {
 	}
 	public Portfolio(Stock[] stockArray) {
 		// TODO Auto-generated constructor stub
-		Stock[] copyied = stockArray;
+		this.portfolioSize = 0;
+		this.balance = 0 ;
+		this.stocks = new Stock[MAX_PORTFOLIO_SIZE];
+		this.title = null;
 		for(int i = 0; i< stockArray.length; i++){
-			this.stocks[i] = new Stock(copyied[i]);
+			this.stocks[i] =  stockArray[i];
 			this.portfolioSize++;
 		}
 	}
@@ -79,7 +85,7 @@ public class Portfolio implements PortfolioInterface {
 			System.out.println("Can't add new stock, portfolio can have only " + MAX_PORTFOLIO_SIZE + " stocks.");
 		}
 		else{
-		int index = findIndexBySymbol(stock.symbol);
+		int index = findIndexBySymbol(stock.getSymbol());
 			if (index == this.portfolioSize){//if not exists
 				this.stocks[this.portfolioSize] = stock;
 				((Stock) this.stocks[this.portfolioSize]).setStockQuantity(0);
@@ -111,10 +117,17 @@ public class Portfolio implements PortfolioInterface {
 		else{
 		int index= findIndexBySymbol(stockSymbol);
 			if(index < this.portfolioSize){//exist
+				if(((Stock) this.stocks[index]).getStockQuantity() != 0 ){
 				sellStock(stockSymbol, -1);
 				this.stocks[index] = this.stocks[this.portfolioSize-1];
 				this.stocks[this.portfolioSize-1] = null;
 				this.portfolioSize--;
+				}
+				else{
+					this.stocks[index] = this.stocks[this.portfolioSize-1];
+					this.stocks[this.portfolioSize-1] = null;
+					this.portfolioSize--;
+				}
 			}
 			else{
 				System.out.print("Not correct symbol of stock was received");//if the stock symbol not exsits in the array
@@ -280,7 +293,7 @@ public class Portfolio implements PortfolioInterface {
 			System.out.print("Not correct symbol of stock was received");
 		}
 		else if(this.portfolioSize == 0){
-			return 0;
+			return index;
 		}
 		else{
 			for(index = 0; index< this.portfolioSize; index++){

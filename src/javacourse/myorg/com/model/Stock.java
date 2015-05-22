@@ -64,6 +64,10 @@ public void setDate(Date time) {
 	// TODO Auto-generated method stub
 	this.date = time;
 }
+public void setDate(long time) {
+	// TODO Auto-generated method stub
+	this.date = new Date(time);
+}
 public ALGO_RECOMMENDATION getRecommendation() {
 	return recommendation;
 }
