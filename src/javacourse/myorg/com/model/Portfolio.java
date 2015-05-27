@@ -11,8 +11,6 @@ public class Portfolio implements PortfolioInterface {
 		BUY,SELL ,REMOVE ,HOLD; 
 	}
 	
-	
-	
 	private String title;
 	private StockInterface[] stocks;
 	private int portfolioSize;
@@ -43,6 +41,8 @@ public class Portfolio implements PortfolioInterface {
 			this.stocks[i] = new Stock(copyied[i]);
 		}
 	}
+	/**This constructor creates a portFolio object 
+	 * @param gets array of stocks and creates portFolio */
 	public Portfolio(Stock[] stockArray) {
 		// TODO Auto-generated constructor stub
 		this.portfolioSize = 0;
@@ -293,7 +293,7 @@ public class Portfolio implements PortfolioInterface {
 			System.out.print("Not correct symbol of stock was received");
 		}
 		else if(this.portfolioSize == 0){
-			return index;
+			return 0;
 		}
 		else{
 			for(index = 0; index< this.portfolioSize; index++){
@@ -304,6 +304,9 @@ public class Portfolio implements PortfolioInterface {
 		}
 		return index;	
 	}
+	/**The method gets stock symbol and finds stock in the portFolio.
+	 * @param gets stock symbol
+	 * @return stock*/
 	public Stock findStock(String stockSymbol){
 		int index = 0;
 		if(stockSymbol.equals(null)){
@@ -334,6 +337,7 @@ public class Portfolio implements PortfolioInterface {
 			System.out.print("You can not withdraw this amount because the acount balance can not be negative");
 		}
 	}
+	/**The method returns the max size of the stocks array*/
 	public static int getMaxSize() {
 		// TODO Auto-generated method stub
 		return MAX_PORTFOLIO_SIZE;

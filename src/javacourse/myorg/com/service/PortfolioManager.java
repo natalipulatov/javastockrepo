@@ -21,7 +21,9 @@ import org.algo.service.DatastoreService;
 //import com.google.appengine.api.datastore.DatastoreService;
 //import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
+
 import javacourse.myorg.com.model.Portfolio;
+import javacourse.myorg.com.model.Portfolio.ALGO_RECOMMENDATION;
 import javacourse.myorg.com.model.Stock;
 
 /** An instance if this class represents portFolio manger that managing the portFolio object 
@@ -219,7 +221,8 @@ public class PortfolioManager implements PortfolioManagerInterface {
 	 * @param stockDto
 	 * @return Stock
 	 */
-	private Stock fromDto(StockDto stockDto) {
+	private Stock fromDto(StockDto stockDto) 
+	{
 		Stock newStock = new Stock();
 
 		newStock.setSymbol(stockDto.getSymbol());
@@ -231,7 +234,8 @@ public class PortfolioManager implements PortfolioManagerInterface {
 		{
 			newStock.setRecommendation(Portfolio.ALGO_RECOMMENDATION.valueOf(stockDto.getRecommendation()));
 		}
-		else
+		
+		else/*TODO : take care of recommendation's return value*/
 		{
 			newStock.setRecommendation(Portfolio.ALGO_RECOMMENDATION.valueOf("HOLD"));
 		}
@@ -243,8 +247,10 @@ public class PortfolioManager implements PortfolioManagerInterface {
 	 * toDto - covert Stock to Stock DTO
 	 * @param inStock
 	 */
-	private StockDto toDto(StockInterface inStock) {
-		if (inStock == null) {
+	private StockDto toDto(StockInterface inStock) 
+	{
+		if (inStock == null) 
+		{
 			return null;
 		}
 		

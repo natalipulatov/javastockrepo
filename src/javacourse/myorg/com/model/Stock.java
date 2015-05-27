@@ -30,6 +30,7 @@ public Stock (String symbol, float ask, float bid, Date date) {
 public Stock(Stock stock){
 	this(new String (stock.getSymbol()), stock.getAsk(), stock.getBid(), new Date(stock.getDate(). getTime() ));	
 } 
+/**This constructor creates a stock object*/
 public Stock() {
 	// TODO Auto-generated constructor stub
 	this.symbol = null;
@@ -61,11 +62,9 @@ public Date getDate() {
 	return date;
 }
 public void setDate(Date time) {
-	// TODO Auto-generated method stub
 	this.date = time;
 }
 public void setDate(long time) {
-	// TODO Auto-generated method stub
 	this.date = new Date(time);
 }
 public ALGO_RECOMMENDATION getRecommendation() {
